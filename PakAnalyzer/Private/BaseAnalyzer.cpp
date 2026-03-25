@@ -431,7 +431,7 @@ FName FBaseAnalyzer::GetAssetClass(const FString& InFilename, FName InPackagePat
 	if (AssetRegistryState.IsValid())
 	{
 		TArray<FAssetData const* const> AssetDataArray;
-		AssetRegistryState->EnumerateAssetsByPackageName(InPackagePath, [&AssetDataArray](const FAssetData* AssetData)
+		AssetRegistryState->EnumerateAssetsByPackageName(InPackagePath, [this, &AssetDataArray](const FAssetData* AssetData)
 		{
 			AssetDataArray.Add(AssetData);
 			return true;
@@ -439,7 +439,7 @@ FName FBaseAnalyzer::GetAssetClass(const FString& InFilename, FName InPackagePat
 		if (AssetDataArray.Num() > 0)
 		{
 			bFoundClassInRegistry = true;
-			AssetClass = AssetData->AssetClassPath.GetAssetName();
+			AssetClass = AssetDataArray[0]->AssetClassPath.GetAssetName();
 		}
 	}
 	
